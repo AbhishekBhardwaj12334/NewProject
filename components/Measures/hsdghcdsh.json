@@ -1,0 +1,317 @@
+[
+    {
+        "addQuestions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "additionalDetails": {
+            "additionalDetails": "",
+            "additionalNotes": "Disha",
+            "basicLabor": [Object
+            ],
+            "customLabor": [Object
+            ],
+            "imgUrls": [Array
+            ],
+            "materials": [Object
+            ]
+        },
+        "currentQuestion": {},
+        "data": null,
+        "error": null,
+        "exteriorMeasures": {
+            "AddOns": [Array
+            ],
+            "exteriorMeasurements": [Object
+            ]
+        },
+        "id": "001",
+        "index": 0,
+        "interiorMeasures": {
+            "additionalInteriorMeasures": [Object
+            ],
+            "interiorMeasurements": [Object
+            ],
+            "roomName": "Rtehxhdbd"
+        },
+        "loading": false,
+        "screensQuestion": {
+            "questionId": "208",
+            "value": "Interior Measure"
+        },
+        "selectedDropdowns": [],
+        "selectedMeasurements": {},
+        "selectedOptions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "selectedTemplate": {
+            "templateId": "03",
+            "value": "Windows"
+        },
+        "step": 7,
+        "toggleBtn": false
+    },
+    {
+        "addQuestions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "additionalDetails": {
+            "additionalNotes": "Response ",
+            "basicLabor": [Object
+            ],
+            "customLabor": [Object
+            ],
+            "imgUrls": [Array
+            ],
+            "materials": [Object
+            ]
+        },
+        "currentQuestion": {},
+        "data": null,
+        "error": null,
+        "exteriorMeasures": {
+            "AddOns": [Array
+            ],
+            "exteriorMeasurements": [Object
+            ]
+        },
+        "id": "002",
+        "index": 0,
+        "interiorMeasures": {
+            "additionalInteriorMeasures": [Object
+            ],
+            "interiorMeasurements": [Object
+            ],
+            "roomName": "Response "
+        },
+        "loading": false,
+        "screensQuestion": {
+            "questionId": "208",
+            "value": "Interior Measure"
+        },
+        "selectedDropdowns": [],
+        "selectedMeasurements": {},
+        "selectedOptions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "selectedTemplate": {
+            "templateId": "03",
+            "value": "Windows"
+        },
+        "step": 8,
+        "toggleBtn": false
+    },
+    {
+        "addQuestions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "additionalDetails": {
+            "additionalDetails": "",
+            "additionalNotes": "Room 1 ",
+            "basicLabor": [Object
+            ],
+            "customLabor": [Object
+            ],
+            "imgUrls": [Array
+            ],
+            "materials": [Object
+            ]
+        },
+        "currentQuestion": {},
+        "data": null,
+        "error": null,
+        "exteriorMeasures": {
+            "AddOns": [Array
+            ],
+            "exteriorMeasurements": [Object
+            ]
+        },
+        "id": "003",
+        "index": 0,
+        "interiorMeasures": {
+            "additionalInteriorMeasures": [Object
+            ],
+            "interiorMeasurements": [Object
+            ],
+            "roomName": "First Room "
+        },
+        "loading": false,
+        "screensQuestion": {
+            "questionId": "208",
+            "value": "Interior Measure"
+        },
+        "selectedDropdowns": [],
+        "selectedMeasurements": {},
+        "selectedOptions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "selectedTemplate": {
+            "templateId": "03",
+            "value": "Windows"
+        },
+        "step": 8,
+        "toggleBtn": false
+    },
+    {
+        "addQuestions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "additionalDetails": {
+            "additionalDetails": "",
+            "additionalNotes": "Room 1 ",
+            "basicLabor": [Object
+            ],
+            "customLabor": [Object
+            ],
+            "imgUrls": [Array
+            ],
+            "materials": [Object
+            ]
+        },
+        "currentQuestion": {},
+        "data": null,
+        "error": null,
+        "exteriorMeasures": {
+            "AddOns": [Array
+            ],
+            "exteriorMeasurements": [Object
+            ]
+        },
+        "id": "004",
+        "index": 0,
+        "interiorMeasures": {
+            "additionalInteriorMeasures": [Object
+            ],
+            "interiorMeasurements": [Object
+            ],
+            "roomName": "Second Room "
+        },
+        "loading": false,
+        "screensQuestion": {
+            "questionId": "208",
+            "value": "Interior Measure"
+        },
+        "selectedDropdowns": [],
+        "selectedMeasurements": {},
+        "selectedOptions": [
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ],
+            [Object
+            ]
+        ],
+        "selectedTemplate": {
+            "templateId": "03",
+            "value": "Windows"
+        },
+        "step": 8,
+        "toggleBtn": false
+    }
+]
