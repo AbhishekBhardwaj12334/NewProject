@@ -62,7 +62,7 @@ const initialState = {
                 interiorFinish: {},
             },
         },
-        id: '',
+        id: 0,
         toggleBtn: false,
     },
     windowResponse: {
@@ -312,6 +312,7 @@ const userDataSlice2 = createSlice({
         },
         clearTempWindow(state) {
             state.doorWindowData.selectedOptions.splice(1, 5);
+            state.doorWindowData.toggleBtn = false
             state.doorWindowData.exteriorMeasures = {
                 exteriorMeasurements: {},
                 AddOns: [

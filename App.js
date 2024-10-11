@@ -3,12 +3,15 @@ import { } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './components/redux/store'
 import MainApp from "./components/MainApp";
-import AppNavigator from "./navigator/appNavigator";
+import { realmConfig } from "./components/realmConfig";
 
 const App = () => {
+  const { RealmProvider } = realmConfig
   return (
     <Provider store={store}>
-      <MainApp />
+      <RealmProvider>
+        <MainApp />
+      </RealmProvider>
     </Provider>
   )
 }

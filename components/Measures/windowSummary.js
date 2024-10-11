@@ -9,10 +9,11 @@ import GlobalModal from '../globalModal';
 import CopyModal from './copyModal';
 import { useRoute } from '@react-navigation/native';
 import NavigateBackHandler from './summaryBackHandler';
+import { realmConfig } from '../realmConfig';
+const { useRealm } = realmConfig;
 const WindowsSummary = ({ navigation }) => {
-    // const route = useRoute();
-    // const { templateId, step } = route.params;
     const details = useSelector(state => state.measuresData?.doorWindowData);
+    const realm = useRealm();
     const tempResponse = useSelector(state => state.measuresData?.windowResponse?.tempResponse);
     // console.log('selectedData:', JSON.stringify(details))
     const [isUpdating, setIsUpdating] = useState(false);
@@ -94,69 +95,103 @@ const WindowsSummary = ({ navigation }) => {
         setShowSummary(showSummary === index ? null : index);
     };
 
-    // const checkStoredData = async () => {
+    // const handleCompleteMeasures = async () => {
+
     //     try {
     //         const storedData = await AsyncStorage.getItem('tempResponse');
-    //         if (storedData) {
-    //             const parsedData = JSON.parse(storedData);
-    //             console.log('Data stored in AsyncStorage:', parsedData);
-    //         } else {
-    //             console.log('No data found in AsyncStorage.');
+    //         let existingData = storedData ? JSON.parse(storedData) : [];
+
+    //         console.log('storedData:', JSON.stringify(existingData), existingData.length);
+    //         console.log('TempResponse:', JSON.stringify(tempResponse));
+
+    //         if (!Array.isArray(tempResponse)) {
+    //             console.error('tempResponse is not an array or is undefined.');
+    //             return;
     //         }
+
+    //         const generateNewId = () => {
+    //             const maxId = existingData.reduce((max, item) => {
+    //                 const currentId = parseInt(item.id, 10);
+    //                 return currentId > max ? currentId : max;
+    //             }, 0);
+    //             const maxIds = String(maxId + 1).padStart(3, '0');
+    //             const newId = parseInt(maxIds);
+    //             return newId;
+    //         };
+
+    //         const TempResponse = tempResponse.map((currentTempResponse) => {
+    //             const existingItemIndex = existingData.findIndex(item => item.id === currentTempResponse.id);
+
+    //             if (existingItemIndex !== -1) {
+    //                 existingData[existingItemIndex] = { ...existingData[existingItemIndex], ...currentTempResponse };
+    //             } else {
+    //                 if (!currentTempResponse.id) {
+    //                     const updatedTempResponse = {
+    //                         ...currentTempResponse,
+    //                         id: generateNewId(),
+    //                     };
+    //                     console.log('Updated TempResponse:', updatedTempResponse);
+    //                     existingData.push(updatedTempResponse);
+    //                     return updatedTempResponse;
+    //                 }
+    //             }
+
+    //             return currentTempResponse;
+    //         });
+
+    //         console.log(storedData, existingData);
+
+    //         await AsyncStorage.setItem('tempResponse', JSON.stringify(existingData));
+    //         console.log('Final tempResponse saved/updated in AsyncStorage.');
+
+    //         dispatch(clearTemplate());
+    //         navigation.navigate('Templates');
     //     } catch (error) {
-    //         console.error('Error fetching data from AsyncStorage:', error);
+    //         console.error('Error saving/updating tempResponse in handleCompleteMeasures:', error);
     //     }
     // };
 
-
     const handleCompleteMeasures = async () => {
-        // const addedResponse = tempResponse.map((currentResponse)) => {
-
-        // }
         try {
-            const storedData = await AsyncStorage.getItem('tempResponse');
-            let existingData = storedData ? JSON.parse(storedData) : [];
-
-            console.log('storedData:', JSON.stringify(existingData), existingData.length);
-            console.log('TempResponse:', JSON.stringify(tempResponse));
+            const existingData = realm.objects('WindowResponse');
+            console.log('existingData:', existingData);
 
             if (!Array.isArray(tempResponse)) {
                 console.error('tempResponse is not an array or is undefined.');
                 return;
             }
+            let currentMaxId = existingData.max('id') || 0;
 
             const generateNewId = () => {
-                const maxId = existingData.reduce((max, item) => {
-                    const currentId = parseInt(item.id, 10);
-                    return currentId > max ? currentId : max;
-                }, 0);
-                return String(maxId + 1).padStart(3, '0');
+                currentMaxId += 1;
+                return currentMaxId;
             };
 
-            const TempResponse = tempResponse.map((currentTempResponse) => {
-                const existingItemIndex = existingData.findIndex(item => item.id === currentTempResponse.id);
+            const updatedTempResponse = tempResponse.map((response) =>
+                response?.id ? response : { ...response, id: generateNewId() }
+            );
 
-                if (existingItemIndex !== -1) {
-                    existingData[existingItemIndex] = { ...existingData[existingItemIndex], ...currentTempResponse };
-                } else {
-                    if (!currentTempResponse.id) {
-                        const updatedTempResponse = {
-                            ...currentTempResponse,
-                            id: generateNewId(),
-                        };
-                        console.log('Updated TempResponse:', updatedTempResponse);
-                        existingData.push(updatedTempResponse);
-                        return updatedTempResponse;
+            console.log('Updated TempResponse:', updatedTempResponse);
+
+            realm.write(() => {
+                updatedTempResponse.forEach((currentTempResponse) => {
+                    const existingItem = existingData.filtered(`id = "${currentTempResponse.id}"`)[0];
+
+                    if (existingItem) {
+                        existingItem.details = JSON.stringify({
+                            ...JSON.parse(existingItem.details),
+                            ...currentTempResponse
+                        });
+                    } else {
+                        realm.create('WindowResponse', {
+                            id: currentTempResponse.id,
+                            details: JSON.stringify(currentTempResponse),
+                        });
                     }
-                }
-
-                return currentTempResponse;
+                });
             });
 
-            console.log(storedData, existingData);
-
-            await AsyncStorage.setItem('tempResponse', JSON.stringify(existingData));
-            console.log('Final tempResponse saved/updated in AsyncStorage.');
+            console.log('Final tempResponse saved/updated in Realm DB.');
 
             dispatch(clearTemplate());
             navigation.navigate('Templates');
@@ -164,6 +199,7 @@ const WindowsSummary = ({ navigation }) => {
             console.error('Error saving/updating tempResponse in handleCompleteMeasures:', error);
         }
     };
+
 
     const renderData = tempResponse.map((item, index) => {
         const unitHeading = `${tempResponse[index].selectedOptions[1].optionValue[0]}${tempResponse[index].selectedOptions[2].optionValue[0]}${tempResponse[index].selectedOptions[3].optionValue[0]}-${tempResponse[index].interiorMeasures.roomName}`;

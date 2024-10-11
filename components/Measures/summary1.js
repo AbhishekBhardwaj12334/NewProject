@@ -14,10 +14,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NavigateBackHandler from "./summaryBackHandler";
 import { useRoute } from "@react-navigation/native";
 import QuestionsDisplay from "./additionalQuestionDispla";
+import { ExtIntDoorsSchema, } from "../realmSchema";
+import { realmConfig } from "../realmConfig";
 
+const { useRealm } = realmConfig;
 const SummaryAll = ({ navigation }) => {
 
     const templateName = useSelector(state => state.measuresData.doorWindowData.selectedTemplate);
+    const realm = useRealm();
     const selectedBasic = useSelector(state => state.measuresData?.doorWindowData?.additionalDetails?.basicLabor);
     const selectedCustom = useSelector(state => state.measuresData?.doorWindowData?.additionalDetails?.customLabor);
     const selectedMaterial = useSelector(state => state.measuresData?.doorWindowData?.additionalDetails?.materials);
@@ -65,68 +69,127 @@ const SummaryAll = ({ navigation }) => {
         dispatch(updateImageName({ uri: selectedPhotos[selectedImageIndex]?.uri, newName: updatedFileName }));
     };
 
+    // Async storage data code 
+    // const handleCompleteMeasures = async () => {
+    //     try {
+    //         if (!templateName || !templateName.templateId) {
+    //             throw new Error('templateName.templateId is required');
+    //         }
+
+    //         let storedData = [];
+    //         if (templateName.templateId === '01') {
+    //             storedData = await AsyncStorage.getItem('stormData');
+    //             console.log('Existing stormData:', storedData);
+    //         } else if (templateName.templateId === '02') {
+    //             storedData = await AsyncStorage.getItem('eIDoorData');
+    //             console.log('Existing eIDoorData:', storedData);
+    //         } else {
+    //             throw new Error('Invalid templateId');
+    //         }
+
+    //         // Initialize with an empty array if there's no data yet
+    //         let existingData = storedData ? JSON.parse(storedData) : [];
+    //         if (!Array.isArray(existingData)) {
+    //             throw new Error('existingData must be an array');
+    //         }
+
+    //         const generateNewId = () => {
+    //             const maxId = existingData.reduce((max, item) => {
+    //                 const currentId = parseInt(item.id, 10);
+    //                 return currentId > max ? currentId : max;
+    //             }, 0);
+    //             return String(maxId + 1).padStart(3, '0');
+    //         };
+
+    //         const currentData = details;
+    //         if (!currentData || typeof currentData !== 'object') {
+    //             throw new Error('details must be an object');
+    //         }
+
+    //         // Check if the current data exists in the stored data array
+    //         const existingItemIndex = existingData.findIndex(item => item.id === currentData.id);
+    //         if (existingItemIndex !== -1) {
+    //             // Update the existing object if found
+    //             existingData[existingItemIndex] = { ...existingData[existingItemIndex], ...currentData };
+    //         } else {
+    //             // Generate a new ID if no ID exists
+    //             if (!currentData.id) {
+    //                 const updatedData = {
+    //                     ...currentData,
+    //                     id: generateNewId(),
+    //                 };
+    //                 existingData.push(updatedData);
+    //             } else {
+    //                 existingData.push(currentData);
+    //             }
+    //         }
+
+    //         // Save the updated data back to AsyncStorage
+    //         if (templateName.templateId === '01') {
+    //             await AsyncStorage.setItem('stormData', JSON.stringify(existingData));
+    //         } else if (templateName.templateId === '02') {
+    //             await AsyncStorage.setItem('eIDoorData', JSON.stringify(existingData));
+    //         }
+
+    //         console.log('Data successfully saved to AsyncStorage.');
+    //         setModalVisible1(false);
+    //         dispatch(clearTemplate());
+    //         navigation.navigate('Templates');
+
+    //     } catch (error) {
+    //         console.error('Error saving data in handleCompleteMeasures:', error);
+    //     }
+    // };
+
+    // Realm dB data storage code
     const handleCompleteMeasures = async () => {
         try {
             if (!templateName || !templateName.templateId) {
                 throw new Error('templateName.templateId is required');
             }
 
-            let storedData = [];
+            let schemaName;
             if (templateName.templateId === '01') {
-                storedData = await AsyncStorage.getItem('stormData');
-                console.log('Existing stormData:', storedData);
+                schemaName = 'StormResponse';
             } else if (templateName.templateId === '02') {
-                storedData = await AsyncStorage.getItem('eIDoorData');
-                console.log('Existing eIDoorData:', storedData);
+                schemaName = 'ExtIntDoors';
             } else {
                 throw new Error('Invalid templateId');
             }
 
-            // Initialize with an empty array if there's no data yet
-            let existingData = storedData ? JSON.parse(storedData) : [];
-            if (!Array.isArray(existingData)) {
-                throw new Error('existingData must be an array');
-            }
-
             const generateNewId = () => {
-                const maxId = existingData.reduce((max, item) => {
-                    const currentId = parseInt(item.id, 10);
-                    return currentId > max ? currentId : max;
-                }, 0);
-                return String(maxId + 1).padStart(3, '0');
+                const maxId = realm.objects(schemaName).max('id') ?? 0;
+                const maxIds = String(maxId + 1).padStart(3, '0');
+                const newId = parseInt(maxIds);
+                return newId;
             };
-
-            const currentData = details;
-            if (!currentData || typeof currentData !== 'object') {
-                throw new Error('details must be an object');
-            }
-
-            // Check if the current data exists in the stored data array
-            const existingItemIndex = existingData.findIndex(item => item.id === currentData.id);
-            if (existingItemIndex !== -1) {
-                // Update the existing object if found
-                existingData[existingItemIndex] = { ...existingData[existingItemIndex], ...currentData };
-            } else {
-                // Generate a new ID if no ID exists
-                if (!currentData.id) {
-                    const updatedData = {
-                        ...currentData,
-                        id: generateNewId(),
-                    };
-                    existingData.push(updatedData);
+            let updatedData
+            realm.write(() => {
+                if (details?.id) {
+                    updatedData = details
                 } else {
-                    existingData.push(currentData);
+                    updatedData = {
+                        ...details,
+                        id: generateNewId(),
+                    }
                 }
-            }
+                const currentData = updatedData;
+                // console.log('jnsjncjkdkkk', realm.objects(schemaName))
+                const existingItem = realm.objects(schemaName).filtered('id = $0', (currentData.id))[0];
+                // console.log('sdncjndsjncdjs', existingItem);
 
-            // Save the updated data back to AsyncStorage
-            if (templateName.templateId === '01') {
-                await AsyncStorage.setItem('stormData', JSON.stringify(existingData));
-            } else if (templateName.templateId === '02') {
-                await AsyncStorage.setItem('eIDoorData', JSON.stringify(existingData));
-            }
+                if (existingItem) {
+                    existingItem.details = JSON.stringify({ ...JSON.parse(existingItem.details), ...currentData });
+                } else {
+                    realm.create(schemaName, {
+                        id: currentData?.id,
+                        details: JSON.stringify(currentData),
+                    });
+                    // console.log('New Data')
+                }
+            });
 
-            console.log('Data successfully saved to AsyncStorage.');
+            console.log('Data successfully saved to Realm.');
             setModalVisible1(false);
             dispatch(clearTemplate());
             navigation.navigate('Templates');
@@ -135,7 +198,6 @@ const SummaryAll = ({ navigation }) => {
             console.error('Error saving data in handleCompleteMeasures:', error);
         }
     };
-
 
     return (
         <View style={{ flex: 1 }}>

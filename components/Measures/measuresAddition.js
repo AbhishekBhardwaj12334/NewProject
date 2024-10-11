@@ -9,44 +9,83 @@ import CopyModal from './copyModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonComponent from './Windows/btnComponent';
 import { useNavigation } from '@react-navigation/native';
+import { ExtIntDoorsSchema, realmConfig, StormResponseSchema } from '../realmConfig';
+const { useQuery, useRealm } = realmConfig;
 const MeasuresAddition = () => {
+    const realm = useRealm();
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const tempWindowIndex = useSelector(state => state.measuresData?.windowResponse?.index)
     const [modalVisible, setModalVisible] = useState(false);
-    const globalIndex = useSelector(state => state.measuresData.doorWindowData.index);
-    const globalStep = useSelector(state => state?.measuresData?.doorWindowData?.step);
+    const globalIndex = useSelector(state => state.measuresData?.doorWindowData?.index);
+    const globalStep = useSelector(state => state.measuresData?.doorWindowData?.step);
     const [localIndex, setLocalIndex] = useState(globalIndex);
     const [localStep, setLocalStep] = useState(globalStep);
     const [modalVisible1, setModalVisible1] = useState(false);
-    const templateName = useSelector(state => state.measuresData.doorWindowData.selectedTemplate);
+    const templateName = useSelector(state => state.measuresData?.doorWindowData?.selectedTemplate);
     const [response, setResponse] = useState([]);
     const selectedData = useSelector(state => state.measuresData.allMeasures.selectedResponseDetail);
-    console.log('dhcbdjc', localStep)
+    console.log('dhcbdjc', localStep);
+    // const queryData = templateName.templateId === '02' ? useQuery('ExtIntDoors') : useQuery('StormResponse');
+    let queryData
+    let schemaName
+    switch (templateName?.templateId) {
+        case '01':
+            schemaName = 'StormResponse'
+            queryData = useQuery('StormResponse')
+            break;
+        case '02':
+            schemaName = 'ExtIntDoors'
+            queryData = useQuery('ExtIntDoors');
+            break;
+        case '03':
+            schemaName = 'WindowResponse'
+            queryData = useQuery('WindowResponse')
+            break;
+        default:
+            console.log('Template do not exist')
+            break;
+    }
+    // console.log('djjdncjndn', JSON.parse(queryData))
+
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         try {
+    //             let storedData
+    //             if (templateName.templateId == '03') {
+    //                 storedData = await AsyncStorage.getItem('tempResponse');
+    //             } else if (templateName.templateId == '02') {
+    //                 storedData = await AsyncStorage.getItem('eIDoorData')
+    //             } else {
+    //                 storedData = await AsyncStorage.getItem('stormData')
+    //             }
+    //             if (storedData !== null) {
+    //                 let parsedData = JSON.parse(storedData);
+    //                 setResponse(parsedData);
+    //                 console.log('Fetched AsyncStorage Data:', parsedData);
+    //             } else {
+    //                 console.log('No data found');
+    //             }
+    //         } catch (error) {
+    //             console.log('Error fetching data from AsyncStorage:', error);
+    //         }
+    //     };
+    //     getData();
+    // }, []);
+
     useEffect(() => {
-        const getData = async () => {
-            try {
-                let storedData
-                if (templateName.templateId == '03') {
-                    storedData = await AsyncStorage.getItem('tempResponse');
-                } else if (templateName.templateId == '02') {
-                    storedData = await AsyncStorage.getItem('eIDoorData')
-                } else {
-                    storedData = await AsyncStorage.getItem('stormData')
-                }
-                if (storedData !== null) {
-                    let parsedData = JSON.parse(storedData);
-                    setResponse(parsedData);
-                    console.log('Fetched AsyncStorage Data:', parsedData);
-                } else {
-                    console.log('No data found');
-                }
-            } catch (error) {
-                console.log('Error fetching data from AsyncStorage:', error);
+        const fetchRealmData = () => {
+            if (queryData && queryData.length > 0) {
+                const fetchedData = queryData.map(item => item.toJSON());
+                const detailsArray = fetchedData.map(item => JSON.parse(item.details));
+                setResponse((detailsArray));
+                console.log('Fetched Realm Data:', detailsArray);
+            } else {
+                console.log('No data found in Realm');
             }
         };
-        getData();
-    }, []);
+        fetchRealmData();
+    }, [queryData]);
     const handleNewMeasures = () => {
         if (response.length >= 1) {
             const newIndex = response.length;
@@ -115,6 +154,7 @@ const MeasuresAddition = () => {
                         <View style={styles.rowView1}>
                             <View>
                                 <Text style={styles.unitHeading}>{unitHeading}</Text>
+                                {console.log('ajjsjscjsjc', response)}
                             </View>
                         </View>
                     </View>
