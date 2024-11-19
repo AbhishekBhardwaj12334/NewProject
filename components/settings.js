@@ -38,6 +38,7 @@ const SettingsScreen = ({ navigation }) => {
                             phoneNumbers: user?.phoneNumbers || '',
                             email: user?.email || '',
                             image: {
+                                imageId: user?.image?.imageId,
                                 uri: user?.image?.uri || '',
                                 type: user?.image?.type || '',
                                 name: user?.image?.name || '',

@@ -41,6 +41,7 @@ const initialState = {
                 phoneNumbers: "+91 8877646465",
                 email: "john@example.com",
                 image: {
+                    imageId: 1,
                     uri: '',
                     type: '',
                     name: '',
@@ -59,6 +60,7 @@ const initialState = {
                 phoneNumbers: "+1 2345678901",
                 email: "alice@example.com",
                 image: {
+                    imageId: 2,
                     uri: '',
                     type: '',
                     name: '',
@@ -77,6 +79,7 @@ const initialState = {
                 phoneNumbers: "+1 3456789012",
                 email: "bob@example.com",
                 image: {
+                    imageId: 3,
                     uri: '',
                     type: '',
                     name: '',
@@ -95,6 +98,7 @@ const initialState = {
                 phoneNumbers: "+91 9958013493",
                 email: "charlie@example.com",
                 image: {
+                    imageId: 4,
                     uri: '',
                     type: '',
                     name: '',
@@ -113,6 +117,7 @@ const initialState = {
                 phoneNumbers: "+1 4567890123",
                 email: "diana@example.com",
                 image: {
+                    imageId: 5,
                     uri: '',
                     type: '',
                     name: '',
@@ -131,6 +136,7 @@ const initialState = {
                 phoneNumbers: "+1 5678901234",
                 email: "ethan@example.com",
                 image: {
+                    imageId: 6,
                     uri: '',
                     type: '',
                     name: '',
@@ -149,6 +155,7 @@ const initialState = {
                 phoneNumbers: "+1 6789012345",
                 email: "fiona@example.com",
                 image: {
+                    imageId: 7,
                     uri: '',
                     type: '',
                     name: '',
@@ -167,6 +174,7 @@ const initialState = {
                 phoneNumbers: "+1 7890123456",
                 email: "george@example.com",
                 image: {
+                    imageId: 8,
                     uri: '',
                     type: '',
                     name: '',
@@ -185,6 +193,7 @@ const initialState = {
                 phoneNumbers: "+1 8901234567",
                 email: "hannah@example.com",
                 image: {
+                    imageId: 9,
                     uri: '',
                     type: '',
                     name: '',
@@ -203,6 +212,7 @@ const initialState = {
                 phoneNumbers: "+1 9012345678",
                 email: "ian@example.com",
                 image: {
+                    imageId: 10,
                     uri: '',
                     type: '',
                     name: '',

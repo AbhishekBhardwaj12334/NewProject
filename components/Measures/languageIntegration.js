@@ -88,7 +88,7 @@ const LangauageIntegrater = ({ navigation }) => {
                         style={styles.touchable}
                         onPress={() => handleLanguage()}
                     >
-                        <Text style={styles.text3}> Ok</Text>
+                        <Text style={styles.text3}> {t("ok")}</Text>
                     </TouchableOpacity>
                 </View>
                 {console.log('Ajnxjsnjnsd', language[selectedLanguage])}

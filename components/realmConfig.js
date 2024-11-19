@@ -38,6 +38,7 @@ export const UserDataSchema = {
 export const ImageSchema = {
     name: 'Image',
     properties: {
+        imageId: 'int',
         uri: 'string',
         type: 'string',
         name: 'string',

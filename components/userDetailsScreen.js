@@ -57,43 +57,78 @@ const UserDetails = ({ navigation }) => {
     const handleSubmit = () => {
         const updates = {};
 
+        // Detect updates in fields
         for (const key in fields) {
             if (fields[key] !== initialState[key]) {
                 updates[key] = fields[key];
             }
-            // fields?.userData?.image = imgUrls;
         }
-
 
         try {
             realm.write(() => {
                 const schemaName = 'UserData';
-                const existingEntity = realm.objects(schemaName).filtered(`id == $0`, (fields.id))[0];
-                console.log('jsdnjndsj', existingEntity)
+                const imageSchemaName = 'Image';
+                const existingEntity = realm.objects(schemaName).filtered(`id == $0`, fields.id)[0];
+
                 if (existingEntity) {
                     console.log('Existing entity found. Checking for updates...');
                     Object.keys(fields).forEach(key => {
-                        if (fields[key] !== existingEntity[key]) {
+                        if (fields[key] !== existingEntity[key] && key !== 'image') {
                             console.log(
                                 `Updating ${key} from ${existingEntity[key]} to ${fields[key]}`
                             );
                             existingEntity[key] = fields[key]; // Update the value in the schema
                         }
                     });
+
+                    // Check for changes in the image object
+                    if (
+                        fields.image.uri !== existingEntity.image?.uri ||
+                        fields.image.type !== existingEntity.image?.type ||
+                        fields.image.name !== existingEntity.image?.name
+                    ) {
+                        console.log('Updating image schema...');
+                        let existingImageEntity = realm.objects(imageSchemaName).filtered(`imageId == $0`, fields.id)[0];
+
+                        if (existingImageEntity) {
+                            // Update existing image record
+                            existingImageEntity.uri = fields.image.uri;
+                            existingImageEntity.type = fields.image.type;
+                            existingImageEntity.name = fields.image.name;
+                        } else {
+                            // Create new image record
+                            realm.create(imageSchemaName, {
+                                // id: fields.id,
+                                uri: fields.image.uri,
+                                type: fields.image.type,
+                                name: fields.image.name,
+                            });
+                        }
+                    }
                 } else {
                     console.log('No matching entity found. Adding a new entity.');
+                    // realm.create(schemaName, { ...fields });
+
+                    // Create new image record
+                    // realm.create(imageSchemaName, {
+                    //     id: fields.id,
+                    //     uri: fields.image.uri,
+                    //     type: fields.image.type,
+                    //     name: fields.image.name,
+                    // });
                 }
             });
 
             console.log('Changes saved successfully.');
         } catch (error) {
-            console.error('Error updating UserData:', error);
+            console.error('Error updating UserData or Image:', error);
         }
 
         // Dispatch Redux action to update the store and disable edit mode
         dispatch(addUserData(fields));
         setEditable(false);
     };
+
 
     const handleProfile = () => {
         setShowCamera(true);
@@ -139,7 +174,7 @@ const UserDetails = ({ navigation }) => {
                             <OpenCamera
                                 onSelectPhotos={(photos) => {
                                     console.log('sdjjdcdsjc', photos)
-                                    setImgUrls(photos)
+                                    setImgUrls(photos[0])
                                     setFields((prevFields) => ({
                                         ...prevFields,
                                         image: photos[0],
