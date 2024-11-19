@@ -48,7 +48,7 @@ const Sizes = ({ navigation }) => {
             }
             setAdditionalNote(selectedData?.additionalDetails?.additionalQuestions);
         }
-    }, [selectedData, details, localStep]);
+    }, []);
 
     const handleBack = () => {
         const newStep = localStep > 0 ? localStep - 1 : 0;

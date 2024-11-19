@@ -23,29 +23,14 @@ const MeasuresAddition = () => {
     const [localStep, setLocalStep] = useState(globalStep);
     const [modalVisible1, setModalVisible1] = useState(false);
     const templateName = useSelector(state => state.measuresData?.doorWindowData?.selectedTemplate);
-    const [response, setResponse] = useState([]);
+    // const [response, setResponse] = useState([]);
     const selectedData = useSelector(state => state.measuresData.allMeasures.selectedResponseDetail);
     console.log('dhcbdjc', localStep);
     // const queryData = templateName.templateId === '02' ? useQuery('ExtIntDoors') : useQuery('StormResponse');
-    let queryData
-    let schemaName
-    switch (templateName?.templateId) {
-        case '01':
-            schemaName = 'StormResponse'
-            queryData = useQuery('StormResponse')
-            break;
-        case '02':
-            schemaName = 'ExtIntDoors'
-            queryData = useQuery('ExtIntDoors');
-            break;
-        case '03':
-            schemaName = 'WindowResponse'
-            queryData = useQuery('WindowResponse')
-            break;
-        default:
-            console.log('Template do not exist')
-            break;
-    }
+    let queryData = useQuery('MeasuresResponse')
+    const fetchedDetails = useSelector(state => state.measuresData?.allMeasures?.fetchedDetails);
+    console.log('djncjdc', fetchedDetails)
+
     // console.log('djjdncjndn', JSON.parse(queryData))
 
     // useEffect(() => {
@@ -72,20 +57,26 @@ const MeasuresAddition = () => {
     //     };
     //     getData();
     // }, []);
-
-    useEffect(() => {
-        const fetchRealmData = () => {
-            if (queryData && queryData.length > 0) {
-                const fetchedData = queryData.map(item => item.toJSON());
-                const detailsArray = fetchedData.map(item => JSON.parse(item.details));
-                setResponse((detailsArray));
-                console.log('Fetched Realm Data:', detailsArray);
-            } else {
-                console.log('No data found in Realm');
-            }
-        };
-        fetchRealmData();
-    }, [queryData]);
+    let response
+    // if (templateName?.templateId == '01') {
+    //     response = fetchedDetails.filter(res => res?.selectedTemplate?.templateId == '01')
+    // } else if(templateName?.templateId == '02') {
+    //     response = fetchedDetails.filter(res => res?.selectedTemplate?.templateId == '02')
+    // } else
+    switch (templateName?.templateId) {
+        case '01':
+            response = fetchedDetails.filter(res => res?.selectedTemplate?.templateId == '01')
+            break;
+        case '02':
+            response = fetchedDetails.filter(res => res?.selectedTemplate?.templateId == '02')
+            break;
+        case '03':
+            response = fetchedDetails.filter(res => res?.selectedTemplate?.templateId == '03')
+            break;
+        default:
+            console.log('No such template exists');
+            break;
+    }
     const handleNewMeasures = () => {
         if (response.length >= 1) {
             const newIndex = response.length;

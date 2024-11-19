@@ -15,7 +15,7 @@ export const Line = () => (
     <LinearGradient
         locations={[0, 0.3, 0.7]}
         colors={["#ffffff", "#1F242822", "#ffffff"]}
-        style={{ height: 2, marginVertical: 8 }}
+        style={{ height: 3, marginVertical: 8 }}
     />
 )
 

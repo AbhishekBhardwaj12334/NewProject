@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
 import { View, TouchableOpacity, Text, FlatList, StatusBar, ImageBackground, Image, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectTemplate, clearTemplate, addQuestions } from '../redux/measures';
+import { selectTemplate, clearTemplate, addQuestions, updatedFetchedDetails } from '../redux/measures';
 import { useIsFocused } from '@react-navigation/native';
 import { questionsExterior, questionsInterior, questionsSecurity } from './questionPage';
 import Fonts from '../../src/fonts/fonts';
+import { realmConfig } from '../realmConfig';
+import { useTranslation } from 'react-i18next';
+const { useQuery, useRealm } = realmConfig
 
 const Templates = ({ navigation }) => {
+    const realm = useRealm();
+    const fetchedDetails = useSelector(state => state.measuresData?.allMeasures?.fetchedDetails);
+    const { t } = useTranslation();
+    let queryData = useQuery('MeasuresResponse')
     const templatesData = [
         { templateId: '01', value: 'Storm/Security' },
         { templateId: '02', value: 'Exterior/Interior Doors' },
         { templateId: '03', value: 'Windows' },
     ];
-
-
     const templateName = useSelector(state => state.measuresData.windowResponse);
     console.log('sjajhsa', JSON.stringify(templateName));
     const Questions = useSelector(state => state.measuresData.doorWindowData.addQuestions);
@@ -28,6 +33,30 @@ const Templates = ({ navigation }) => {
             dispatch(clearTemplate());
         }
     }, [isFocused, dispatch]);
+
+    useEffect(() => {
+        const fetchRealmData = () => {
+            if (queryData && queryData.length > 0) {
+                try {
+                    const fetchedData = queryData.map(item => item.toJSON());
+                    const detailsArray = fetchedData.map(item => JSON.parse(item.details));
+
+                    console.log('Fetched Realm Data:', detailsArray);
+
+                    // Directly dispatch updatedFetchedDetails with the new detailsArray
+                    dispatch(updatedFetchedDetails(detailsArray));
+                    console.log('Data added to the reducer')
+                } catch (error) {
+                    console.error('Error parsing details:', error);
+                }
+            } else {
+                console.log('No data found in Realm');
+            }
+        };
+
+        fetchRealmData();
+    }, [queryData, dispatch]);
+
 
     const handleBack = () => {
         navigation.navigate('JobDetailsPage');
@@ -84,7 +113,7 @@ const Templates = ({ navigation }) => {
                         style={{ flex: 1, fontSize: 26, fontFamily: Fonts.FONTS_MEDIUM, color: '#000' }}
                         numberOfLines={1}
                     >
-                        Measures
+                        {t("measures")}
                     </Text>
                     {/* <TouchableOpacity style={styles.viewJobBtn}>
                         <Text style={styles.btnText}>View Job</Text>

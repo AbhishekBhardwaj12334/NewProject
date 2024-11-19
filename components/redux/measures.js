@@ -72,7 +72,13 @@ const initialState = {
     },
     allMeasures: {
         selectedResponse: [],
-        selectedResponseDetail: {}
+        selectedResponseDetail: {},
+        fetchedDetails: [],
+        appLanguage: {}
+    },
+    usersDetails: {
+        userData: {},
+        usersDetails: []
     }
 };
 
@@ -380,8 +386,31 @@ const userDataSlice2 = createSlice({
                 additionalNotes: ''
             };
         },
+        updatedFetchedDetails(state, action) {
+            if (Array.isArray(action.payload)) {
+                state.allMeasures.fetchedDetails = [...action.payload]
+            } else {
+                console.error('Invalid payload for updatedFetchedDetails reducer. Expected an array.')
+            }
+        },
+        addAppLanguage(state, action) {
+            console.log('ahdjsdcjsdm', action.payload)
+            const languagePayload = action.payload;
+            if (typeof languagePayload === 'object' && languagePayload !== null && !Array.isArray(languagePayload)) {
+                state.allMeasures.appLanguage = languagePayload;
+            } else {
+                console.error('Invalid payload for appLanguage. Expected a plain object.');
+            }
+        },
+        addUserDetails(state, action) {
+            state.usersDetails.usersDetails = action.payload;
+        },
+        addUserData(state, action) {
+            console.log('dksmkdmck', action.payload)
+            state.usersDetails.userData = action.payload;
+        }
     }
 });
 
-export const { updateDoorWindowData, selectTemplate, clearTemplate, setOption, addQuestions, addedQuestion, setMeasurements, addBasicLaborItem, addCustomLaborItem, addMaterialItem, addImage, removeImage, updateImageName, setStep, addResponse, setSelectedResponseDetail, updateResponseAtIndex, setIndex, updateLocationDetails, removeResponseAtIndex, updateOptionArray, setToggleBtn, setExteriorMeasures, setInteriorMeasures, addRoomName, addElseNeeded, addInteriorFinish, addAdditionalNotes, updateAddOnSelected, addTempResponse, updateTempResponse, setResponseIndex, changeIsUpdating, clearTempWindow, clearDetails, addDetails, updateAdditionalQuestions } = userDataSlice2.actions;
+export const { updateDoorWindowData, selectTemplate, clearTemplate, setOption, addQuestions, addedQuestion, setMeasurements, addBasicLaborItem, addCustomLaborItem, addMaterialItem, addImage, removeImage, updateImageName, setStep, addResponse, setSelectedResponseDetail, updateResponseAtIndex, setIndex, updateLocationDetails, removeResponseAtIndex, updateOptionArray, setToggleBtn, setExteriorMeasures, setInteriorMeasures, addRoomName, addElseNeeded, addInteriorFinish, addAdditionalNotes, updateAddOnSelected, addTempResponse, updateTempResponse, setResponseIndex, changeIsUpdating, clearTempWindow, clearDetails, addDetails, updateAdditionalQuestions, updatedFetchedDetails, addAppLanguage, addUserData, addUserDetails } = userDataSlice2.actions;
 export default userDataSlice2.reducer;

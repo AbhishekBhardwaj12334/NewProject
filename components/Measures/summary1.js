@@ -148,14 +148,7 @@ const SummaryAll = ({ navigation }) => {
                 throw new Error('templateName.templateId is required');
             }
 
-            let schemaName;
-            if (templateName.templateId === '01') {
-                schemaName = 'StormResponse';
-            } else if (templateName.templateId === '02') {
-                schemaName = 'ExtIntDoors';
-            } else {
-                throw new Error('Invalid templateId');
-            }
+            schemaName = 'MeasuresResponse';
 
             const generateNewId = () => {
                 const maxId = realm.objects(schemaName).max('id') ?? 0;
@@ -183,6 +176,7 @@ const SummaryAll = ({ navigation }) => {
                 } else {
                     realm.create(schemaName, {
                         id: currentData?.id,
+                        template: currentData?.selectedTemplate?.templateId,
                         details: JSON.stringify(currentData),
                     });
                     // console.log('New Data')

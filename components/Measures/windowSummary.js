@@ -153,7 +153,7 @@ const WindowsSummary = ({ navigation }) => {
 
     const handleCompleteMeasures = async () => {
         try {
-            const existingData = realm.objects('WindowResponse');
+            const existingData = realm.objects('MeasuresResponse');
             console.log('existingData:', existingData);
 
             if (!Array.isArray(tempResponse)) {
@@ -183,8 +183,9 @@ const WindowsSummary = ({ navigation }) => {
                             ...currentTempResponse
                         });
                     } else {
-                        realm.create('WindowResponse', {
+                        realm.create('MeasuresResponse', {
                             id: currentTempResponse.id,
+                            template: currentTempResponse?.selectedTemplate?.templateId,
                             details: JSON.stringify(currentTempResponse),
                         });
                     }

@@ -45,6 +45,10 @@ import WindowsAddDetails from '../components/Measures/Windows/windowsAdditionalD
 import NonStandard1 from '../components/Measures/nonStandardSizes';
 import NonStandard2 from '../components/Measures/nonStandardE&I';
 import JobDetailsPage from '../components/Measures/jobDetailsScreen';
+import LangauageIntegrater from '../components/Measures/languageIntegration';
+import SettingsScreen from '../components/settings';
+import UserDataPage from '../components/usersDataScreen';
+import UserDetails from '../components/userDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -95,7 +99,10 @@ const AppNavigator = () => {
         <Stack.Screen name="ExteriorWindowMeasures" component={ExteriorWindowMeasures} option={{ title: 'Go Screen' }} />
         <Stack.Screen name="InteriorWindow" component={InteriorWindow} option={{ title: 'Go Screen' }} />
         <Stack.Screen name="WindowsAddDetails" component={WindowsAddDetails} option={{ title: 'Go Screen' }} />
-
+        <Stack.Screen name="LangauageIntegrater" component={LangauageIntegrater} option={{ title: 'Go Screen' }} />
+        <Stack.Screen name="Settings" component={SettingsScreen} option={{ title: 'Go Screen' }} />
+        <Stack.Screen name="UserDataScreen" component={UserDataPage} option={{ title: 'Go Screen' }} />
+        <Stack.Screen name="UserDetailsScreen" component={UserDetails} option={{ title: 'Go Screen' }} />
       </Stack.Navigator>
     </NavigationContainer>
   )

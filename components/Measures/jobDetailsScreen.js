@@ -1,12 +1,13 @@
-// import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { View, StatusBar, Text, Image, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native'
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Fonts from '../../src/fonts/fonts'
 import NavigateBackHandler from "./summaryBackHandler";
+import { useTranslation } from "react-i18next";
+
 const JobDetailsPage = ({ navigation }) => {
-    // const navigation = useNavigation();
     const details = useSelector(state => state.measuresData?.doorWindowData);
+    const { t } = useTranslation();
     console.log(details)
     const disable = details?.selectedTemplate && JSON.stringify(details.selectedTemplate) === '{}';
 
@@ -20,6 +21,9 @@ const JobDetailsPage = ({ navigation }) => {
         handleBackNavigation();
     }
 
+    const handleSettings = () => {
+        navigation.navigate('Settings')
+    }
     const handleMeasures = () => {
         navigation.navigate('Templates')
     }
@@ -41,13 +45,13 @@ const JobDetailsPage = ({ navigation }) => {
                         style={{ flex: 1, fontSize: 26, fontFamily: Fonts.FONTS_MEDIUM, color: '#000' }}
                         numberOfLines={1}
                     >
-                        Job Details Page
+                        {t("job-DetailsPage")}
                     </Text>
-                    <View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TouchableOpacity
                             style={[
                                 styles.viewJobBtn,
-                                { borderColor: disable ? 'grey' : '#498DEF' },
+                                { borderColor: disable ? 'grey' : '#498DEF', marginRight: 10 },
                             ]}
                             disabled={disable}
                             onPress={() => handleMeasuresScreen()}
@@ -57,7 +61,23 @@ const JobDetailsPage = ({ navigation }) => {
                                     styles.btnText,
                                     { color: disable ? 'grey' : '#498DEF' }
                                 ]}>
-                                Measures
+                                {t("measures")}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                styles.viewJobBtn,
+                                // { borderColor: disable ? 'grey' : '#498DEF' },
+                            ]}
+                            // disabled={disable}
+                            onPress={() => handleSettings()}
+                        >
+                            <Text
+                                style={[
+                                    styles.btnText,
+                                    // { color: disable ? 'grey' : '#498DEF' }
+                                ]}>
+                                {t("settings")}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -67,7 +87,7 @@ const JobDetailsPage = ({ navigation }) => {
                         style={styles.measuresBtn}
                         onPress={() => handleMeasures()}
                     >
-                        <Text style={styles.measuresBtnText}>Measures</Text>
+                        <Text style={styles.measuresBtnText}>{t("measures")}</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

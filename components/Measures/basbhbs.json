@@ -1,161 +1,142 @@
 [
     {
-        "addQuestions": [
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ]
-        ],
-        "additionalDetails": {
-            "additionalDetails": "",
-            "additionalNotes": "Response 2 ",
-            "additionalQuestions": [Array
-            ],
-            "basicLabor": [Object
-            ],
-            "customLabor": [Object
-            ],
-            "imgUrls": [Array
-            ],
-            "materials": [Object
-            ]
-        },
-        "currentQuestion": {},
-        "data": null,
-        "error": null,
-        "exteriorMeasures": {
-            "AddOns": [Array
-            ],
-            "exteriorMeasurements": [Object
-            ]
-        },
         "id": 1,
-        "index": 0,
-        "interiorMeasures": {
-            "additionalInteriorMeasures": [Object
-            ],
-            "interiorMeasurements": [Object
-            ],
-            "roomName": "Response 2 "
+        "name": "John",
+        "age": 30,
+        "address": {
+            "street": "123 Main St",
+            "city": "Anytown",
+            "state": "CA",
+            "zip": 12345,
+            "country": "USA"
         },
-        "loading": false,
-        "screensQuestion": {
-            "questionId": "208",
-            "value": "Interior Measure"
-        },
-        "selectedDropdowns": [],
-        "selectedMeasurements": {},
-        "selectedOptions": [
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ]
-        ],
-        "selectedTemplate": {
-            "templateId": "03",
-            "value": "Windows"
-        },
-        "step": 8,
-        "toggleBtn": true
+        "phoneNumbers": "+91 8877646465",
+        "email": "john@example.com"
     },
     {
-        "addQuestions": [
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ]
-        ],
-        "additionalDetails": {
-            "additionalNotes": "Response 2 ",
-            "basicLabor": [Object
-            ],
-            "customLabor": [Object
-            ],
-            "imgUrls": [Array
-            ],
-            "materials": [Object
-            ]
+        "id": 2,
+        "name": "Alice",
+        "age": 28,
+        "address": {
+            "street": "456 Elm St",
+            "city": "Othertown",
+            "state": "NY",
+            "zip": 67890,
+            "country": "USA"
         },
-        "currentQuestion": {},
-        "data": null,
-        "error": null,
-        "exteriorMeasures": {
-            "AddOns": [Array
-            ],
-            "exteriorMeasurements": [Object
-            ]
+        "phoneNumbers": "+1 2345678901",
+        "email": "alice@example.com"
+    },
+    {
+        "id": 3,
+        "name": "Bob",
+        "age": null,
+        "address": {
+            "street": "",
+            "city": "",
+            "state": "",
+            "zip": null,
+            "country": ""
         },
-        "id": 1,
-        "index": 0,
-        "interiorMeasures": {
-            "additionalInteriorMeasures": [Object
-            ],
-            "interiorMeasurements": [Object
-            ],
-            "roomName": "Response 2"
+        "phoneNumbers": "+1 3456789012",
+        "email": "bob@example.com"
+    },
+    {
+        "id": 4,
+        "name": "Charlie",
+        "age": 35,
+        "address": {
+            "street": "789 Oak St",
+            "city": "Sometown",
+            "state": "TX",
+            "zip": 11223,
+            "country": "USA"
         },
-        "loading": false,
-        "screensQuestion": {
-            "questionId": "208",
-            "value": "Interior Measure"
+        "phoneNumbers": "",
+        "email": "charlie@example.com"
+    },
+    {
+        "id": 5,
+        "name": "Diana",
+        "age": 25,
+        "address": {
+            "street": "101 Pine St",
+            "city": "Newcity",
+            "state": "FL",
+            "zip": 33445,
+            "country": "USA"
         },
-        "selectedDropdowns": [],
-        "selectedMeasurements": {},
-        "selectedOptions": [
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ],
-            [Object
-            ]
-        ],
-        "selectedTemplate": {
-            "templateId": "03",
-            "value": "Windows"
+        "phoneNumbers": "+1 4567890123",
+        "email": "diana@example.com"
+    },
+    {
+        "id": 6,
+        "name": "Ethan",
+        "age": 40,
+        "address": {
+            "street": "202 Maple St",
+            "city": "Oldtown",
+            "state": "WA",
+            "zip": 55667,
+            "country": "USA"
         },
-        "step": 8,
-        "toggleBtn": false
+        "phoneNumbers": "+1 5678901234",
+        "email": "ethan@example.com"
+    },
+    {
+        "id": 7,
+        "name": "Fiona",
+        "age": 32,
+        "address": {
+            "street": "",
+            "city": "Anycity",
+            "state": "",
+            "zip": null,
+            "country": "USA"
+        },
+        "phoneNumbers": "+1 6789012345",
+        "email": "fiona@example.com"
+    },
+    {
+        "id": 8,
+        "name": "George",
+        "age": 29,
+        "address": {
+            "street": "303 Birch St",
+            "city": "Yourtown",
+            "state": "OR",
+            "zip": 77889,
+            "country": "USA"
+        },
+        "phoneNumbers": "+1 7890123456",
+        "email": "george@example.com"
+    },
+    {
+        "id": 9,
+        "name": "Hannah",
+        "age": null,
+        "address": {
+            "street": "",
+            "city": "Theircity",
+            "state": "",
+            "zip": null,
+            "country": ""
+        },
+        "phoneNumbers": "+1 8901234567",
+        "email": "hannah@example.com"
+    },
+    {
+        "id": 10,
+        "name": "Ian",
+        "age": 45,
+        "address": {
+            "street": "404 Cedar St",
+            "city": "Hometown",
+            "state": "IL",
+            "zip": 99887,
+            "country": "USA"
+        },
+        "phoneNumbers": "+1 9012345678",
+        "email": "ian@example.com"
     }
 ]

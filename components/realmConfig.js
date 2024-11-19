@@ -1,34 +1,51 @@
 import { createRealmContext } from '@realm/react';
 import Realm from 'realm';
-
-export const StormResponseSchema = {
-    name: 'StormResponse',
+export const MeasuresResponseSchema = {
+    name: 'MeasuresResponse',
     properties: {
         id: 'int',
+        template: 'string',
         details: 'string',
     },
     primaryKey: 'id',
 };
-
-export const ExtIntDoorsSchema = {
-    name: 'ExtIntDoors',
+export const AppLanguageSchema = {
+    name: 'AppLanguage',
     properties: {
         id: 'int',
-        details: 'string',
+        nativename: 'string',
+        name: 'string',
+        languageKey: 'string'
     },
-    primaryKey: 'id',
 };
-export const WindowResponseSchema = {
-    name: 'WindowResponse',
+export const UserDataSchema = {
+    name: 'UserData',
     properties: {
         id: 'int',
-        details: 'string',
+        name: 'string',
+        age: 'string',
+        address1: 'string',
+        address2: 'string',
+        city: 'string',
+        state: 'string',
+        zipCode: 'string',
+        country: 'string',
+        phoneNumbers: 'string',
+        email: 'string',
+        image: 'Image'
     },
-    primaryKey: 'id',
+};
+export const ImageSchema = {
+    name: 'Image',
+    properties: {
+        uri: 'string',
+        type: 'string',
+        name: 'string',
+    },
 };
 
 export const realmConfig = createRealmContext({
-    schema: [StormResponseSchema, ExtIntDoorsSchema, WindowResponseSchema],
+    schema: [MeasuresResponseSchema, AppLanguageSchema, UserDataSchema, ImageSchema],
     schemaVersion: 1,
-    // deleteRealmIfMigrationNeeded: true,
+    deleteRealmIfMigrationNeeded: true,
 });

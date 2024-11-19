@@ -28,30 +28,32 @@ const AnimatedInput = ({ label, value, onChangeText, secureTextEntry, containerS
   };
 
   return (
-    <View style={[styles.container, containerStyles]}>
-      <View style={styles.inputContainer}>
-        <Animated.Text
-          style={[
-            styles.label,
-            {
-              transform: [{ translateY: labelPosition }],
-              color: isFocused ? 'rgba(31, 37, 40, 0.30)' : 'rgba(31, 36, 40, 0.30)',
-              zIndex: isFocused || value ? 1 : 0,
-              backgroundColor: isFocused || value ? 'white' : 'transparent'
-            },
-          ]}
-        >
-          {label}
-        </Animated.Text>
-        <TextInput
-          style={styles.input}
-          value={value}
-          onChangeText={onChangeText}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          secureTextEntry={secureTextEntry}
-          editable={editable}
-        />
+    <View style={styles.view9}>
+      <View style={[styles.container, containerStyles]}>
+        <View style={styles.inputContainer}>
+          <Animated.Text
+            style={[
+              styles.label,
+              {
+                transform: [{ translateY: labelPosition }],
+                color: isFocused ? 'rgba(31, 37, 40, 0.30)' : 'rgba(31, 36, 40, 0.30)',
+                zIndex: isFocused || value ? 1 : 0,
+                backgroundColor: isFocused || value ? 'white' : 'transparent'
+              },
+            ]}
+          >
+            {label}
+          </Animated.Text>
+          <TextInput
+            style={styles.input}
+            value={value}
+            onChangeText={onChangeText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            secureTextEntry={secureTextEntry}
+            editable={editable}
+          />
+        </View>
       </View>
     </View>
   );
@@ -86,6 +88,16 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.FONTS_MEDIUM,
     bottom: 41,
     color: 'black'
+  },
+  view9: {
+    flex: 1,
+    backgroundColor: 'white',
+    maxHeight: 60,
+    borderWidth: 1,
+    borderColor: 'rgba(31, 36, 40, 0.30)',
+    borderRadius: 8,
+    marginBottom: 20,
+    width: '100%'
   },
 });
 

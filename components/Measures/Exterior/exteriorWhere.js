@@ -30,7 +30,7 @@ const WhereIsItExterior = ({ navigation }) => {
         }
     })
     const [whereIsItData, setWhereIsItData] = useState(data);
-    // console.log('WhereIsItData', whereIsItData.length)
+    console.log('WhereIsItData', whereIsItData)
     useEffect(() => {
         setLocalStep(globalStep);
     }, [globalStep]);

@@ -1,14 +1,13 @@
 import React from "react";
 import { View } from 'react-native';
 import AppNavigator from "../navigator/appNavigator";
-import Demo from "./text";
-import DropdownComponent from "./Measures/dropdown";
-import AdditionalQuestion from "./Measures/additionalQuestion";
-import QuestionsDisplay from "./Measures/additionalQuestionDispla";
+import SettingsScreen from "./settings";
 
 const MainApp = () => {
   return (
     <AppNavigator />
+    // <LangauageIntegrater />
+    // <SettingsScreen />
   )
 }
 export default MainApp;

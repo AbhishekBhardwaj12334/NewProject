@@ -1,10 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { useSelector } from "react-redux";
 
 const ButtonComponent = ({ templateId, step }) => {
     const navigation = useNavigation()
+    const { t } = useTranslation();
     const tempResponse = useSelector(state => state.measuresData?.windowResponse?.tempResponse);
     const templateName = useSelector(state => state.measuresData?.doorWindowData);
     const localStep = useSelector(state => state.measuresData?.doorWindowData?.step);
@@ -34,7 +36,7 @@ const ButtonComponent = ({ templateId, step }) => {
                 style={[styles.viewJobBtn, { marginRight: 5 }]}
                 onPress={() => handleJobBtn()}
             >
-                <Text style={styles.btnText}>View Job</Text>
+                <Text style={styles.btnText}>{t("view-Job")}</Text>
             </TouchableOpacity>
             {localStep > -1 ?
                 (<TouchableOpacity style={[
@@ -48,7 +50,7 @@ const ButtonComponent = ({ templateId, step }) => {
                         styles.btnText,
                         { color: disable ? 'grey' : '#498DEF' }
                     ]}>
-                        Summary
+                        {t("summary")}
                     </Text>
                 </TouchableOpacity>) : null
             }

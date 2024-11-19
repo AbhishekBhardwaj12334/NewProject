@@ -1,0 +1,12 @@
+{
+    "en": {
+        "id": 1,
+        "name": "English",
+        "nativename": "English"
+    },
+    "hn": {
+        "id": 2,
+        "name": "Hindi",
+        "nativename": "हिंदी"
+    }
+}

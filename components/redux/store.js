@@ -9,6 +9,10 @@ import userDataSlice4 from './stormOptions'
 import userDataSlice5 from './windowOptions'
 
 const store = configureStore({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    immutableCheck: { warnAfter: 1024 },
+    serializableCheck: { warnAfter: 1024 },
+  }),
   reducer: {
     userData: userDataSlice,
     legalDisclamer: userDataSlice1,
