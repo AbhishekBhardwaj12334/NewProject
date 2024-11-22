@@ -49,6 +49,7 @@ import LangauageIntegrater from '../components/Measures/languageIntegration';
 import SettingsScreen from '../components/settings';
 import UserDataPage from '../components/usersDataScreen';
 import UserDetails from '../components/userDetailsScreen';
+import AddUser from '../components/addUser';
 
 const Stack = createNativeStackNavigator();
 
@@ -103,6 +104,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Settings" component={SettingsScreen} option={{ title: 'Go Screen' }} />
         <Stack.Screen name="UserDataScreen" component={UserDataPage} option={{ title: 'Go Screen' }} />
         <Stack.Screen name="UserDetailsScreen" component={UserDetails} option={{ title: 'Go Screen' }} />
+        <Stack.Screen name="AddUserScreen" component={AddUser} option={{ title: 'Go Screen' }} />
       </Stack.Navigator>
     </NavigationContainer>
   )

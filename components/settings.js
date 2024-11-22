@@ -18,6 +18,11 @@ const SettingsScreen = ({ navigation }) => {
     const handleLanguage = () => {
         navigation.navigate('LangauageIntegrater');
     }
+
+    const handleAddUser = () => {
+        navigation.navigate('AddUserScreen');
+    }
+
     const handleUsers = async () => {
         try {
             const schemaName = 'UserData';
@@ -117,7 +122,7 @@ const SettingsScreen = ({ navigation }) => {
                     <Line />
                     <TouchableOpacity
                         style={{ flexDirection: 'row', alignItems: 'center' }}
-                        onPress={() => handleLanguage()}
+                        onPress={() => handleAddUser()}
                     >
                         <View
                             style={styles.view3}>

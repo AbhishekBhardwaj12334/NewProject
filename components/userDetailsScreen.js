@@ -28,6 +28,7 @@ const UserDetails = ({ navigation }) => {
         age: userDetail?.age?.toString(),
         phoneNumbers: userDetail?.phoneNumbers,
         image: {
+            imageId: userDetail?.imageId?.toString() || '',
             uri: userDetail?.image?.uri || 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg',
             type: userDetail?.image?.type,
             name: userDetail?.image?.name
@@ -129,11 +130,6 @@ const UserDetails = ({ navigation }) => {
         setEditable(false);
     };
 
-
-    const handleProfile = () => {
-        setShowCamera(true);
-    }
-
     const updateField = (field, value) => {
         setFields(prev => ({ ...prev, [field]: value }));
     };
@@ -164,9 +160,7 @@ const UserDetails = ({ navigation }) => {
                 </View>
                 <ScrollView style={styles.view2}>
                     <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }}>
-                        <View style={styles.container}
-                        // onPress={() => handleProfile()}
-                        >
+                        <View style={styles.container}                        >
                             <Image source={{ uri: fields?.image?.uri }} style={styles.image} />
                             {/* <Image source={require('../assets/icons/Vector.png')} style={styles.image2} /> */}
                         </View>
