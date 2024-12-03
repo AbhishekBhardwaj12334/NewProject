@@ -5,12 +5,14 @@ import Fonts from '../src/fonts/fonts'
 import { useDispatch, useSelector } from "react-redux";
 import { addUserData, addUserDetails } from "./redux/measures";
 import { realmConfig } from "./realmConfig";
+import GlobalModal from "./globalModal";
 const { useQuery } = realmConfig
 
 const UserDataPage = ({ navigation }) => {
     const data = useQuery('UserData');
     const dispatch = useDispatch();
     const [usersData, setUsersData] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
     console.log('abxjsxjsjxn', usersData);
     useEffect(() => {
         const fetchRealmData = () => {
@@ -38,6 +40,32 @@ const UserDataPage = ({ navigation }) => {
         dispatch(addUserData(usersData[index]));
         navigation.navigate('UserDetailsScreen');
     }
+
+    const handleDelete = (index) => {
+        try {
+            const userToDelete = usersData[index];
+            console.log('jsjdcsjcndck', userToDelete)
+
+            // Update Realm DB
+            data.realm.write(() => {
+                const userInRealm = data.filtered(`id == ${userToDelete.id}`);
+                console.log('ABCDEFGH', userInRealm)
+                if (userInRealm.length > 0) {
+                    data.realm.delete(userInRealm[0]); // Delete the user from Realm
+                }
+            });
+
+            // Update state
+            const updatedUsersData = [...usersData];
+            updatedUsersData.splice(index, 1);
+            setUsersData(updatedUsersData);
+
+            console.log(`User with ID ${userToDelete.id} deleted successfully.`);
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
+
     const { t } = useTranslation();
     return (
         <View style={styles.mainView}>
@@ -73,7 +101,9 @@ const UserDataPage = ({ navigation }) => {
                                     <Text style={[styles.details, { fontSize: 14 }]}>{user.phoneNumbers.slice(-2).padStart(user.phoneNumbers.length, '*')}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <TouchableOpacity style={{ paddingHorizontal: 6 }}>
+                                    <TouchableOpacity style={{ paddingHorizontal: 6 }}
+                                        onPress={() => handleDelete(index)}
+                                    >
                                         <Image
                                             source={require('../assets/icons/delete.png')}
                                             tintColor={"grey"}
@@ -91,8 +121,18 @@ const UserDataPage = ({ navigation }) => {
                                         />
                                     </TouchableOpacity>
                                 </View>
+                                <GlobalModal
+                                    visible={modalVisible}
+                                    title="Are you sure?"
+                                    message="You want to delete this user"
+                                    okText="Ok"
+                                    cancelText="Cancel"
+                                    onOk={() => handleDelete(index)}
+                                    onCancel={() => setModalVisible(false)}
+                                />
                             </View>
                         ))
+
                     ) : (
                         <Text>No user data available</Text>
                     )}
